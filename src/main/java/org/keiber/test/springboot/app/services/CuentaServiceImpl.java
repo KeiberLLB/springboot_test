@@ -4,7 +4,6 @@ import org.keiber.test.springboot.app.models.Banco;
 import org.keiber.test.springboot.app.models.Cuenta;
 import org.keiber.test.springboot.app.repositories.BancoRepository;
 import org.keiber.test.springboot.app.repositories.CuentaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,7 +14,6 @@ public class CuentaServiceImpl implements CuentaService {
   private final CuentaRepository cuentaRepository;
   private final BancoRepository bancoRepository;
 
-  @Autowired
   public CuentaServiceImpl(CuentaRepository cuentaRepository, BancoRepository bancoRepository) {
     this.cuentaRepository = cuentaRepository;
     this.bancoRepository = bancoRepository;

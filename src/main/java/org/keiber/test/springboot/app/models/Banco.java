@@ -4,6 +4,7 @@ package org.keiber.test.springboot.app.models;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "bancos")
 public class Banco {
 
   @Id
