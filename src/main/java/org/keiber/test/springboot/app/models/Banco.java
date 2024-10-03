@@ -1,10 +1,18 @@
 package org.keiber.test.springboot.app.models;
 
+
+import jakarta.persistence.*;
+
+@Entity
 public class Banco {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String nombre;
 
-  //cuando se usa un tipo int (primitivo : diferente de Integer) es para que se inicie en CERO
+  @Column(name = "total_transferencias")
+  //cuando se usa un tipo int (primitivo: diferente de Integer) es para que se inicie en CERO
   private int totalTransferencias;
 
   public Banco() {
