@@ -17,13 +17,13 @@ public class Cuenta {
   private String persona;
   private BigDecimal saldo;
 
-  public Cuenta() {
-  }
-
   public Cuenta(Long id, String persona, BigDecimal saldo) {
     this.id = id;
     this.persona = persona;
     this.saldo = saldo;
+  }
+
+  public Cuenta() {
   }
 
   // Getters and setters
