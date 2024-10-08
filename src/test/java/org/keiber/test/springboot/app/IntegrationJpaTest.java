@@ -69,6 +69,7 @@ public class IntegrationJpaTest {
     assertEquals("Pepe", cuentaPepe.getPersona());
     assertEquals("3000", cuentaPepe.getSaldo().toPlainString());
     assertEquals(3L, cuenta.getId());
+    assertEquals(3, cuentaRepository.findAll().size());
   }
 
   @Test
