@@ -2,6 +2,7 @@ package org.keiber.test.springboot.app.controllers;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.keiber.test.springboot.app.models.Cuenta;
@@ -27,6 +28,18 @@ public class CuentaController {
 
   @Autowired
   private CuentaService cuentaService;
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<Cuenta> listar() {
+    return cuentaService.findAll();
+  }
+
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public Cuenta guardar(@RequestBody Cuenta cuenta) {
+    return cuentaService.save(cuenta);
+  }
 
   @Operation(summary = "Obtiene el detalle de una cuenta por ID")
   @GetMapping("/{id}")

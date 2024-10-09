@@ -2,7 +2,6 @@ package org.keiber.test.springboot.app;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.keiber.test.springboot.app.models.Cuenta;
 import org.keiber.test.springboot.app.repositories.CuentaRepository;
