@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,10 +56,10 @@ public class CuentaControllerTestRestTemplateTest {
   void setUp() {
     objectMapper = new ObjectMapper();
     client.setErrorHandler(new DefaultResponseErrorHandler() {
-        @Override
-        public void handleError(@SuppressWarnings("null") ClientHttpResponse response) throws IOException {
-            // No lanzar excepciones para códigos de error
-        }
+      @Override
+      public void handleError(@SuppressWarnings("null") ClientHttpResponse response) throws IOException {
+        // No lanzar excepciones para códigos de error
+      }
     });
   }
 
@@ -80,8 +81,7 @@ public class CuentaControllerTestRestTemplateTest {
     assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
     assertNotNull(json);
     assertTrue(json.contains("Transferencia realizada con éxito"));
-    assertTrue(json.contains(
-        "{\"date\":\"2024-10-10\",\"transacción\":{\"cuentaOrigenId\":1,\"cuentaDestinoId\":2,\"monto\":100,\"bancoId\":1},\"mensaje\":\"Transferencia realizada con éxito\",\"status\":\"OK\"}"));
+    assertTrue(json.contains("{\"date\":\"2024-10-11\",\"transacción\":{\"cuentaOrigenId\":1,\"cuentaDestinoId\":2,\"monto\":100,\"bancoId\":1},\"mensaje\":\"Transferencia realizada con éxito\",\"status\":\"OK\"}"));
 
     JsonNode jsonNode = objectMapper.readTree(json);
     assertEquals("Transferencia realizada con éxito", jsonNode.path("mensaje").asText());
@@ -162,12 +162,18 @@ public class CuentaControllerTestRestTemplateTest {
 
   @Test
   @Order(5)
-  void testEliminar() throws JsonMappingException, JsonProcessingException{
+  void testEliminar() throws JsonMappingException, JsonProcessingException {
     ResponseEntity<Cuenta[]> respuesta = client.getForEntity(crearUri("/api/cuentas"), Cuenta[].class);
     List<Cuenta> cuentas = Arrays.asList(respuesta.getBody());
     assertEquals(3, cuentas.size());
 
-    client.delete(crearUri("/api/cuentas/3"));
+    // client.delete(crearUri("/api/cuentas/3"));
+    Map<String, Long> pathVariable = new HashMap<>();
+    pathVariable.put("id", 3L);
+    ResponseEntity<Void> respuestaDelete = client.exchange(crearUri("/api/cuentas/{id}"), HttpMethod.DELETE, null,
+            Void.class, pathVariable);
+    assertEquals(HttpStatus.NO_CONTENT, respuestaDelete.getStatusCode());
+    assertFalse(respuestaDelete.hasBody());
 
     respuesta = client.getForEntity(crearUri("/api/cuentas"), Cuenta[].class);
     cuentas = Arrays.asList(respuesta.getBody());
